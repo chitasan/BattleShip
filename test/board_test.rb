@@ -26,5 +26,4 @@ class BoardTest < Minitest::Test
 
   def test_placements_are_not_valid
   end
-
 end 

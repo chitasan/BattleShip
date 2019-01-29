@@ -10,5 +10,6 @@ class Board
   
     def valid_placement?(name, coordinates)
     end
+    
 end
   
