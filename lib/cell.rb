@@ -7,17 +7,11 @@ class Cell
     @ship = nil
   end
 
-  def empty?
-    if @ship == 0
-      true
-    else
-      false
-    end
+  def empty? #refactored if statement to boolean 
+    @ship == nil
   end
 
-  def place_ship(new_ship)
-    new_ship = Ship.new(name, length)
-    @ship = new_ship
-    return @ship
+  def place_ship(ship) #refactored
+    @ship = ship
   end
 end
