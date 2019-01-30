@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/ship'
+require '../lib/ship'
 
 class ShipTest < Minitest::Test
 
@@ -26,17 +26,21 @@ class ShipTest < Minitest::Test
     refute false, cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
-    3 * cruiser.hit
+    3.times do
+      cruiser.hit
+    end
     assert true, cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
-    7 * cruiser.hit
+    7.times do
+      cruiser.hit
+    end
     assert true, cruiser.sunk?
   end
 
   def test_the_ships_health_after_hit
     cruiser = Ship.new("Cruiser", 3)
-    cruiser.hit 
+    cruiser.hit
     assert_equal 2, cruiser.health
   end
 
