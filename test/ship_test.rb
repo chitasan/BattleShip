@@ -33,10 +33,24 @@ class ShipTest < Minitest::Test
     assert true, cruiser.sunk?
   end
 
-  def test_the_ships_health_after_hit
+
+  # did i test this right if i hit ship to negative health? 
+  def test_the_ships_health_after_hit 
     cruiser = Ship.new("Cruiser", 3)
     cruiser.hit 
     assert_equal 2, cruiser.health
+
+    cruiser = Ship.new("Cruiser", 3)
+    cruiser.hit 
+    cruiser.hit
+    assert_equal 1, cruiser.health
+
+    cruiser = Ship.new("Cruiser", 3)
+    cruiser.hit 
+    cruiser.hit
+    cruiser.hit
+    cruiser.hit 
+    assert_equal 19, cruiser.health
   end
 
 end
