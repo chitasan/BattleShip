@@ -25,16 +25,11 @@ class ShipTest < Minitest::Test
     refute false, cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
-    cruiser.hit 
-    cruiser.hit
-    cruiser.hit
+    3 * cruiser.hit
     assert true, cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
-    cruiser.hit
-    cruiser.hit
-    cruiser.hit
-    cruiser.hit
+    7 * cruiser.hit
     assert true, cruiser.sunk?
   end
 
