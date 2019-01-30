@@ -12,7 +12,7 @@ class Ship
     @health == 0
   end
 
-  def hit
+  def hit 
     @health -= 1
   end
 

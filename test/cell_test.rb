@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/ship'
-require './lib/cell'
+require '../lib/ship'
+require '../lib/cell'
 
 class CellTest < Minitest::Test
 
@@ -15,22 +15,20 @@ class CellTest < Minitest::Test
     assert_equal "B4", cell.coordinate
   end
 
-  def test_ship_exists_in_cell #double check later
+  def test_ship_exists_in_cell
     cell = Cell.new("B4")
-    expected = nil
-    actual = cell.ship
-    assert_nil expected, actual
+    assert_nil nil, cell.ship
   end
 
-  def test_if_cell_is_empty
+  def test_if_cell_is_empty #refactored test
     cell = Cell.new("B4")
     assert true, cell.empty?
   end
 
   def test_if_ship_can_be_placed_in_cell
     cell = Cell.new("B4")
-    cruiser = Ship.new("Cruiser", 3) #error arguments (2,0)
-    assert_equal cruiser, cell.place_ship(cruiser)
+    cruiser = Ship.new("Cruiser", 3)
+    assert_equal cruiser, cell.place_ship(cruiser) 
   end
 
 

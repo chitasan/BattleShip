@@ -21,6 +21,7 @@ class ShipTest < Minitest::Test
     refute false, cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
+
     cruiser.hit
     refute false, cruiser.sunk?
 
