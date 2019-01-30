@@ -1,10 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/ship'
-require '../lib/cell'
+require './lib/ship'
+require './lib/cell'
 
-class CellTest < Minitest::Test
-
+ class CellTest < Minitest::Test
+#
   def test_cell_exists
     cell = Cell.new("B4")
     assert_instance_of Cell, cell
@@ -28,8 +28,15 @@ class CellTest < Minitest::Test
   def test_if_ship_can_be_placed_in_cell
     cell = Cell.new("B4")
     cruiser = Ship.new("Cruiser", 3)
-    assert_equal cruiser, cell.place_ship(cruiser) 
-  end
+    assert_equal cruiser, cell.place_ship(cruiser)
+    assert_equal cruiser, cell.ship
+#   end
 
+  def if_ship_fired_upon
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    asser
+
+  end
 
 end
