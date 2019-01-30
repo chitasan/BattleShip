@@ -8,19 +8,15 @@ class Ship
   end
 
   def health
-    #related to length until hit
+    @length
   end
 
-  def sunk?
-    if health = 0
-      true
-    else
-      false
-    end
+  def sunk? #refactor method: changed if statement to boolean 
+    @health == 0
   end
 
   def hit
-    # when hit +1 health -1
+    @health -= 1
   end
 
 end
