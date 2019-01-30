@@ -28,9 +28,6 @@ class ShipTest < Minitest::Test
   def test_if_ship_is_hit
     cruiser = Ship.new("Cruiser", 3)
     assert_equal 
-
-
-
   end
 
 end
