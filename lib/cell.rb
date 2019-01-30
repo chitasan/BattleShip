@@ -13,4 +13,13 @@ class Cell
   def place_ship(ship) 
     @ship = ship
   end
+
+  def fired_upon?
+    @fired_upon
+  end
+
+  def fired_upon
+    #ship is fired_upon (use ship.hit from class ship), otherwise, no fired upon if no ship
+    #use boolean/conditional statement 
+  end 
 end
