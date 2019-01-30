@@ -7,17 +7,18 @@ class Cell
     @ship = []
   end
 
-  def empty?
-    if @ship == 0
-      true
-    else
-      false
-    end
+  def empty? #refactored if statement to boolean 
+    @ship == nil
   end
 
+<<<<<<< Updated upstream
   def place_ship(new_name)
     new_ship = Ship.new(name, length)
     @ship << new.ship
     return @ship 
+=======
+  def place_ship(ship) #refactored
+    @ship = ship
+>>>>>>> Stashed changes
   end
 end
