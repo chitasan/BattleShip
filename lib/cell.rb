@@ -1,5 +1,4 @@
 class Cell
-
   attr_reader :coordinate, :ship
 
   def initialize(coordinate)
@@ -7,11 +6,11 @@ class Cell
     @ship = nil
   end
 
-  def empty? #refactored if statement to boolean 
+  def empty? 
     @ship == nil
   end
 
-  def place_ship(ship) #refactored
+  def place_ship(ship) 
     @ship = ship
   end
 end
