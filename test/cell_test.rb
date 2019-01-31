@@ -4,7 +4,6 @@ require './lib/ship'
 require './lib/cell'
 
  class CellTest < Minitest::Test
-#
   def test_cell_exists
     cell = Cell.new("B4")
     assert_instance_of Cell, cell
@@ -13,6 +12,7 @@ require './lib/cell'
   def test_it_has_attributes
     cell = Cell.new("B4")
     assert_equal "B4", cell.coordinate
+    assert_nil nil, cell.ship #moved this from a separate test as ship is an attribute, too
   end
 
 <<<<<<< Updated upstream
@@ -20,11 +20,11 @@ require './lib/cell'
     cell = Cell.new("B4")
     assert_nil nil, cell.ship
   end
-
+908
   def test_if_cell_is_empty #refactored test
 =======
   def test_if_cell_has_no_ships #renamed test
->>>>>>> Stashed changes
+>>>>>>> 4d8555e6e582b685f4cdfc2705dcd6c037a4b481
     cell = Cell.new("B4")
     assert true, cell.empty?
   end
@@ -36,23 +36,6 @@ require './lib/cell'
     assert_equal cruiser, cell.ship
   end
 
-<<<<<<< Updated upstream
-  def test_if_ship_was_not_fired_upon?
-    cell = Cell.new("B4")
-    cruiser = Ship.new("Cruiser", 3)
-    refute false, cell.fired_upon?
-  end
-
-  def test_the_ships_health_after_hit
-    cell = Cell.new("B4")
-    cruiser = Ship.new("Cruiser", 3)
-    assert_equal 2, ship.health
-  end
-
-  def test_the_ship_was_fired_upon
-    cell = Cell.new("B4")
-    cruiser = Ship.new("Cruiser", 3)
-=======
   def test_if_cell_is_fired_upon?
     cell = Cell.new("B4") #removed instance of ship as we are testing am empty cell
     refute false, cell.fired_upon?
@@ -62,6 +45,7 @@ require './lib/cell'
     cell.place_ship(cruiser)
     cell.fire_upon
     assert true, cell.fired_upon?
+
   end
 
   def test_the_ships_health_after_hit #rename to fire_upon instead of hit
@@ -73,39 +57,38 @@ require './lib/cell'
     assert_equal 2, cell.ship.health #add in cell as the ship is in this cell
   end
 
-  def test_the_ship_was_fired_upon ## Remove test becuase this is the same as test_if_cell_is_fired_upon
+  def test_the_ship_was_fired_upon
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+=======
     skip
     cell = Cell.new("B4") #removed instance of ship as it is not needed since it's not placed in cell
->>>>>>> Stashed changes
+>>>>>>> 4d8555e6e582b685f4cdfc2705dcd6c037a4b481
     assert true, cell.fired_upon?
   end
 
   def test_that_cell_1_exists
+    skip
     cell_1 = Cell.new("B4")
     assert_instance_of Cell, cell_1
   end
 
   def test_it_represents_a_cell_that_has_not_been_fired_upon
+    skip
     cell_1 = Cell.new("B4")
     refute false, cell_1.fire_upon
     assert_equal ".", cell_1.render
   end
 
-<<<<<<< Updated upstream
   def test_it_represents_a_miss
+<<<<<<< HEAD
 =======
-  def test_a_miss_fired_on_empty_cell
     skip
->>>>>>> Stashed changes
+>>>>>>> 4d8555e6e582b685f4cdfc2705dcd6c037a4b481
     cell = Cell.new("B4")
     assert true, cell.empty?
     assert true, cell.fired_upon?
     assert_equal "M", cell_1.render
-<<<<<<< Updated upstream
-  end     
-
-
-=======
   end
 
   def test_that_cell_2_exists_with_a_ship
@@ -122,5 +105,6 @@ require './lib/cell'
       assert_equal cruiser, cell.place_ship(cruiser) ## Maybe?
       assert true "S",cell_2.render(true)
     end
->>>>>>> Stashed changes
+=======
+>>>>>>> 4d8555e6e582b685f4cdfc2705dcd6c037a4b481
 end

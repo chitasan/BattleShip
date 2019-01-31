@@ -9,11 +9,10 @@ class Ship
   end
 
   def sunk?
-    @health == 0
+    @health <= 0 #changed to less or equal to; do we test for negative health? 
   end
 
   def hit 
     @health -= 1
   end
-
 end
