@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/ship'
 require './lib/cell'
 
  class CellTest < Minitest::Test
@@ -85,7 +84,6 @@ require './lib/cell'
     cruiser = Ship.new("Cruiser", 3)
 
     cell_2.place_ship(cruiser)
-    cell_2.fire_upon
 
     assert_equal "S", cell_2.render(true)
   end 
@@ -101,18 +99,18 @@ require './lib/cell'
   end
 
   def test_board_result_when_cell_has_been_fired_upon_and_ship_has_been_sunk
-    skip
     cell_2 = Cell.new("C3")
     cruiser = Ship.new("Cruiser", 3)
     cell_2.place_ship(cruiser)
     
-    cell_2.fired_upon
-    refute false, cruiser.sunk?
+    cell_2.fire_upon
+    refute cruiser.sunk?
+    assert_equal "H", cell_2.render
 
     cruiser.hit
     cruiser.hit
 
-    assert true, cruiser.sunk?
+    assert cruiser.sunk?
     assert_equal "X", cell_2.render
   end
 end

@@ -1,3 +1,5 @@
+require './lib/ship'
+
 class Cell
   attr_reader :coordinate, :ship, :fire_upon
 
@@ -27,13 +29,13 @@ class Cell
   end
 
   def render(boolean = false) #refactor, case statement? #choose conditional statement or boolean, below not both! 
-    if @ship != nil && @fire_upon == true 
+    if @ship != nil && @fire_upon == true && @ship.sunk? == false
       "H"
     elsif @ship == nil && @fire_upon == true
       "M"
-    elsif @fire_upon == true && @ship.sunk? == true && @ship == nil
+    elsif @fire_upon == true && @ship.sunk? == true && @ship != nil
       "X"
-    elsif @ship.sunk? != true && boolean == true && @fire_upon == false
+    elsif @ship != nil && boolean == true && @fire_upon == false 
       "S"
     else 
       "."
