@@ -3,7 +3,6 @@ require 'minitest/pride'
 require './lib/ship'
 
 class ShipTest < Minitest::Test
-
   def test_ship_exists
     cruiser = Ship.new("Cruiser", 3)
     assert_instance_of Ship, cruiser
@@ -26,16 +25,18 @@ class ShipTest < Minitest::Test
     refute false, cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
-    3 * cruiser.hit
+    3.times do
+      cruiser.hit
+    end
     assert true, cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
-    7 * cruiser.hit
+    7.times do
+      cruiser.hit
+    end
     assert true, cruiser.sunk?
   end
 
-
-  # did i test this right if i hit ship to negative health? 
   def test_the_ships_health_after_hit 
     cruiser = Ship.new("Cruiser", 3)
     cruiser.hit 
@@ -51,7 +52,6 @@ class ShipTest < Minitest::Test
     cruiser.hit
     cruiser.hit
     cruiser.hit 
-    assert_equal 19, cruiser.health
+    assert_equal -1, cruiser.health
   end
-
 end

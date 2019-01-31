@@ -13,4 +13,15 @@ class Cell
   def place_ship(ship) 
     @ship = ship
   end
+<<<<<<< Updated upstream
+=======
+
+  def fired_upon?
+    @fired_upon
+  end
+
+  def fired_upon #(fire_upon)
+    
+  end
+>>>>>>> Stashed changes
 end
