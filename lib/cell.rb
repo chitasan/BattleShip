@@ -19,11 +19,16 @@ class Cell
     @fired_upon
   end
 
+<<<<<<< HEAD
+  def fired_upon #(fire_upon)
+    
+=======
   def fired_upon 
     @fired_upon = true 
     if @ship != nil 
       @ship.hit
     end
+>>>>>>> 0f6fe03c0b30ba1361b4527bde5820a7fb6d541e
   end
 
   def render(boolean = nil) #nil for optional boolean arg (see iteration 1 directions)
