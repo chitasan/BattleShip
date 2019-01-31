@@ -16,26 +16,28 @@ class ShipTest < Minitest::Test
     assert_equal 3, cruiser.health
   end
 
+  #test if hit works
+
   def test_if_ship_sunk
     cruiser = Ship.new("Cruiser", 3)
-    refute false, cruiser.sunk?
+    refute cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
 
     cruiser.hit
-    refute false, cruiser.sunk?
+    refute cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
     3.times do
       cruiser.hit
     end
-    assert true, cruiser.sunk?
+    assert cruiser.sunk?
 
-    cruiser = Ship.new("Cruiser", 3)
+    cruiser = Ship.new("Cruiser", 3) #can delete if in same method 
     7.times do
       cruiser.hit
     end
-    assert true, cruiser.sunk?
+    assert cruiser.sunk?
   end
 
   def test_the_ships_health_after_hit
