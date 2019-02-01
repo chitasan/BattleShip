@@ -4,6 +4,7 @@ class Board
     attr_reader :cells, :column, :row
 
     def initialize
+
         @cells =       #refactor?
             {
                 "A1" => Cell.new("A1"),
@@ -27,6 +28,8 @@ class Board
 
     def valid_coordinate?(coordinate) #check to see if value exists in hash 
         @cells.key?(coordinate)
+
+
     end
 
     def same_length?(name, coordinates)
