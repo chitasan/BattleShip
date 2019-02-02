@@ -4,12 +4,12 @@ class Ship
 
   def initialize(name, length)
     @name = name
-    @length = length
+    @length = length #could i do @health = length 
     @health = length 
   end
 
   def sunk?
-    @health <= 0 #changed to less or equal to; do we test for negative health? 
+    @health <= 0 
   end
 
   def hit 
