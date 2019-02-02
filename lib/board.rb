@@ -6,6 +6,23 @@ class Board
     def initialize
         @columns = ("A".."D")
         @rows = (1..4)
+
+        @cells = {}
+    end 
+
+    def create_cells
+        @columns.each do |column|
+            @rows.each do |row|
+                key = "#{column}#{row}"
+                cells[key] = Cell.new(key)
+             end
+        end
+        @cells
+    end
+
+    def valid_coordinate?(coordinate) #check to see if value exists in hash 
+        @cells.key?(coordinate)
+
         @cells = {} 
     end
 
@@ -40,9 +57,5 @@ class Board
     #end
 
 end 
-
-board = Board.new
-cruiser = Ship.new("Cruiser", 3)
-p board.create_cells
 
 
