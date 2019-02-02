@@ -3,7 +3,6 @@ require 'minitest/pride'
 require './lib/ship' 
 
 class ShipTest < Minitest::Test
-
   def test_ship_exists
     cruiser = Ship.new("Cruiser", 3)
     assert_instance_of Ship, cruiser
@@ -25,7 +24,6 @@ class ShipTest < Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
 
     cruiser.hit
-    refute cruiser.sunk?
 
     cruiser = Ship.new("Cruiser", 3)
     3.times do
@@ -37,13 +35,26 @@ class ShipTest < Minitest::Test
     7.times do
       cruiser.hit
     end
+    
     assert cruiser.sunk?
+
   end
 
-  def test_the_ships_health_after_hit
+  def test_the_ships_health_after_hit 
     cruiser = Ship.new("Cruiser", 3)
     cruiser.hit
     assert_equal 2, cruiser.health
-  end
 
+    cruiser = Ship.new("Cruiser", 3)
+    cruiser.hit 
+    cruiser.hit
+    assert_equal 1, cruiser.health
+
+    cruiser = Ship.new("Cruiser", 3)
+    cruiser.hit 
+    cruiser.hit
+    cruiser.hit
+    cruiser.hit 
+    assert_equal -1, cruiser.health
+  end
 end

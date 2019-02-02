@@ -43,12 +43,3 @@ class Cell
   end
 
 end
- 
-=begin
-M
-.
-X
-H 
-S 
-.
-=end 
