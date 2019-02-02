@@ -19,28 +19,52 @@ class Board
         @cells
     end
 
-    def valid_coordinate?(coordinate) #check to see if value exists in hash 
-        @cells.key?(coordinate)
+    def valid_coordinate?(coordinate) 
+        create_cells.key?(coordinate)
     end
 
-    def same_length?(name, coordinates)
-        @coordinates.length == @ship.length 
+    def coordinate_column_to_oordinates(coordinates)
+        split_coordinates = coordinates.map do |coordinate|
+            coordinate.split('')
+        end
+
+        new_coordinates_with_oordinates_ordinate = split_coordinates.map do |coordinate|
+            coordinate[0].to_s.ord
+        end 
+
+    end
+    
+    def split_coordinates(coordinates)
+        coordinates.map do |coordinate|
+            coordinate.split('')
+        end
+    end
+
+    def consecutive?(coordinates)
+        coordinates_into_string = coordinates.to_s.gsub!(/[^0-9A-Za-z]/, '')
+
+        coordinates_into_string.chars.map(&:to_i).each_cons(2).all? {|x,y| x == y - 1}
+        #use .ord?/ change columns into ordinates 
     end 
 
-    def consecutive?
-        #coordinates.each_cons
+    def diagonal
     end
 
-    def diagonal? #coordinates cannot be diagonal 
-    end 
-
-    #name = Ship object, and array of Coords 
-    def valid_placement?(name, coordinates) 
-        #same_length? && consecutive? && diagonal tests must pass before we can do this one. 
+    def valid_placement?(ship, coordinates) 
+        #same length:
+        #ship.length == coordinates.length &&
+        #conseutive? == true 
+        #diagonal == false, rows || column must not match 
+            #slope = +/-1
     end
-
 end 
 
 
 board = Board.new
 p board.create_cells
+p board.split_coordinates(["A1", "A2"])
+p board.consecutive?(["A1", "A2"])
+p board.coordinate_column_to_oordinates(["A1", "A2"])
+
+
+#p board.coordinate_column_to_oordinates(["A1", "A2"])
