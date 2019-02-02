@@ -1,54 +1,90 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/ship'
-require './lib/cell'
 require './lib/board'
+
 
 class BoardTest < Minitest::Test
 
-  def test_cell_exists
+  def test_board_exists
     board = Board.new
+
     assert_instance_of Board, board
   end
 
-  def test_it_has_attributes
+  def test_that_cells_attribute_and_is_a_hash
+    board = Board.new
 
+    assert_equal Hash, board.cells.class
+    #assert_equal 16, board.cells.length -- cannot test till as actual = 0
   end
+
+  def test_it_has_16_cells_with_key_value_pair
+    board = Board.new
+
+    assert_equal 16, board.create_cells.keys.length
+    assert_equal 16, board.create_cells.values.length 
+  end 
+ 
+  # def test_key_value_points_to_cell_objects #do i test for this? how? 
+  #   board = Board.new
+
+  #   assert_equal expected, actual 
+  # end 
 
   def test_coordinates_are_valid
-    cells = { A..D => 1..4}
-    assert true, board.valid_coordinate?("A1")
-    assert true, board.valid_coordinate?("D4")
-    end
+    board = Board.new
 
-  def test_coordinates_are_not_valid
-    cells = { A..D => 1..4}
-    refute false, board.valid_coordinate?("A5")
-    refute false, board.valid_coordinate?("E1")
-    refute false, board.valid_coordinate?("A22")
+    assert board.valid_coordinate?("A1") 
+    assert board.valid_coordinate?("D4")
   end
 
-  def test_placements_are_valid
+  def test_coordinates_not_valid 
+    board = Board.new
+  
+    refute board.valid_coordinate?("A5")
+    refute board.valid_coordinate?("E1")
+    refute board.valid_coordinate?("A22")
+  end
+
+  def test_if_coordinates_and_ship_are_same_length
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
-    submarine.Ship.new("Submarine", 2)
+    submarine = Ship.new("Submarine", 2)
+
+    refute board.same_length?(cruiser, ["A1", "A2"])
+    assert board.same_length?(cruiser, ["A1", "A2", "A3"])
+    refute board.same_length?(submarine, ["A1", "A2", "A3"])
+    assert board.same_length?(submarine, ["A1", "A2"])
+  end 
+
+  def test_if_coordinates_are_consecutive
+    skip
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    refute board.valid_placement?(cruiser, ["A1", "A2", "A4"])
+    refute board.valid_placement?(submarine, ["A1", "C1"])
+    refute board.valid_placement?(cruiser, ["A3", "A2", "A1"])
+    refute board.valid_placement?(cruiser, ["C1", "B1"])
   end
 
+  def test_if_coordinates_are_diagonal
+    skip
+  end 
+
+  def test_if_placements_are_valid 
+    skip
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    refute board.valid_placement?(cruiser, ["A1", "A2"])
+    refute board.valid_placement?(submarine, ["A2", "A3", "A4"])
+  end
+ 
   def test_placements_are_not_valid
-    
+    skip #this test is the refute assertion in the test above 
   end
 
-  # def test_ship_with_optional_boolean_arg_to_reveal_unfired_ship
-  #   cell_2 = Cell.new("C3")
-  #   cell.place_ship(cruiser) ## Maybe?
-  #   refute false, cell empty?
-  #   assert true "S", cell_2.render(true)
-  #
-  # def test_M_represents_a_miss
-  #   cell = Cell.new("B4")
-  #   assert true, cell.empty?
-  #   assert true, cell.fire_upon
-  #   assert_equal "M", cell_1.render
-  #
-  # end
 end
