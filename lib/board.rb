@@ -20,42 +20,44 @@ class Board
         @cells
     end
 
-    def valid_coordinate?(coordinate) #check to see if value exists in hash 
-        @cells.key?(coordinate)
-
-        @cells = {} 
-    end
-
-    def create_cells
-        columns.each do |column|
-            rows.each do |row|
-            key = "#{column}#{row}"
-            cells[key] = Cell.new(key)
-            end
-        end
-        cells
-    end
-
     def valid_coordinate?(coordinate) 
         create_cells.key?(coordinate)
     end
 
-    def same_length?(ship, coordinates)
-        ship.length == coordinates.length
+    def coordinate_column_to_oordinates(coordinates)
+        split_coordinates = coordinates.map do |coordinate|
+            coordinate.split('')
+        end
+
+        new_coordinates_with_oordinates_ordinate = split_coordinates.map do |coordinate|
+            coordinate[0].to_s.ord
+        end 
+
+    end
+    
+    def split_coordinates(coordinates)
+        coordinates.map do |coordinate|
+            coordinate.split('')
+        end
+    end
+
+    def consecutive?(coordinates)
+        coordinates_into_string = coordinates.to_s.gsub!(/[^0-9A-Za-z]/, '')
+
+        coordinates_into_string.chars.map(&:to_i).each_cons(2).all? {|x,y| x == y - 1}
+        #use .ord?/ change columns into ordinates 
     end 
 
-    #def consecutive?
-        #coordinates.each_cons
-    #end
-
-    #def diagonal? #coordinates cannot be diagonal 
-    #end 
-
-    #name = Ship object, and array of Coords  
-    #def valid_placement?(name, coordinates) 
-        #same_length? && consecutive? && diagonal tests must pass before we can do this one. 
-    #end
-
+    def diagonal?
+    end
+    
+    def valid_placement?(ship, coordinates) 
+        #same length:
+        #ship.length == coordinates.length &&
+        #conseutive? == true 
+        #diagonal == false, rows || column must not match 
+            #slope = +/-1
+    end
 end 
 
 
