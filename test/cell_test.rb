@@ -100,18 +100,25 @@ require './lib/cell'
     cell_2.place_ship(cruiser)
     
     cell_2.fire_upon
+
     refute cruiser.sunk?
     assert_equal "H", cell_2.render
 
     cruiser.hit
     cruiser.hit
 
+<<<<<<< HEAD
     assert cruiser.sunk?
     assert_equal "X", cell_2.render
 <<<<<<< Updated upstream
   end
 =======
   end     
+=======
+    assert_equal cruiser, cell.place_ship(cruiser)
+    assert_equal cruiser, cell.ship
+  end
+>>>>>>> 4c703417d49a7e53e7f6c4a307f72c5553b8fa43
 
   def test_if_cell_is_fired_upon?
     cell = Cell.new("B4") #removed instance of ship as we are testing am empty cell 
@@ -122,6 +129,7 @@ require './lib/cell'
     cell.place_ship(cruiser) 
     cell.fire_upon
     assert true, cell.fired_upon? 
+<<<<<<< HEAD
   end
 
   def test_the_ships_health_after_hit #rename to fire_upon instead of hit 
@@ -133,11 +141,27 @@ require './lib/cell'
     assert_equal 2, cell.ship.health #add in cell as the ship is in this cell 
   end
 
+=======
+  end
+
+  def test_the_ships_health_after_hit #rename to fire_upon instead of hit 
+    skip
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    cell.place_ship(cruiser) #need to place ship in cell, listing instances does not make it placed 
+    cell.fire_upon
+    assert_equal 2, cell.ship.health #add in cell as the ship is in this cell 
+  end
+
+>>>>>>> 4c703417d49a7e53e7f6c4a307f72c5553b8fa43
   def test_the_ship_was_fired_upon
     skip
     cell = Cell.new("B4") #removed instance of ship as it is not needed since it's not placed in cell 
     assert true, cell.fired_upon?
   end
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 4c703417d49a7e53e7f6c4a307f72c5553b8fa43
 end

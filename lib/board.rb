@@ -1,11 +1,12 @@
 require './lib/cell'
 
 class Board
-    attr_reader :cells, :column, :row
+    attr_reader :cells, :columns, :rows
 
     def initialize
         @columns = ("A".."D")
         @rows = (1..4)
+
         @cells = {}
     end 
 
@@ -47,9 +48,9 @@ class Board
         #use .ord?/ change columns into ordinates 
     end 
 
-    def diagonal
+    def diagonal?
     end
-
+    
     def valid_placement?(ship, coordinates) 
         #same length:
         #ship.length == coordinates.length &&
@@ -60,11 +61,3 @@ class Board
 end 
 
 
-board = Board.new
-p board.create_cells
-p board.split_coordinates(["A1", "A2"])
-p board.consecutive?(["A1", "A2"])
-p board.coordinate_column_to_oordinates(["A1", "A2"])
-
-
-#p board.coordinate_column_to_oordinates(["A1", "A2"])
