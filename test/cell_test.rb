@@ -100,6 +100,7 @@ require './lib/cell'
     cell_2.place_ship(cruiser)
     
     cell_2.fire_upon
+
     refute cruiser.sunk?
     assert_equal "H", cell_2.render
 
