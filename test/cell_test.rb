@@ -19,19 +19,19 @@ require './lib/cell'
   end
  
   def test_cell_has_no_ships_by_default
-    assert_nil nil, @cell.ship
-    assert true, @cell.empty?
+    assert_nil @cell.ship
+    assert @cell.empty?
   end
 
   def test_fire_upon_is_false_by_default
-    refute false, @cell.fire_upon
+    refute @cell.fire_upon
   end
 
   def test_if_ship_can_be_added_into_cell 
     @cell.place_ship(@cruiser)
 
     assert_equal @cruiser, @cell.ship
-    refute false, @cell.empty?
+    refute @cell.empty?
   end
 
   def test_if_cell_is_fired_upon?
@@ -40,7 +40,7 @@ require './lib/cell'
     @cell.place_ship(@cruiser)
     @cell.fire_upon 
 
-    assert true, @cell.fired_upon?
+    assert @cell.fired_upon?
   end
 
   def test_ship_health_after_cell_is_fire_upon
@@ -60,7 +60,7 @@ require './lib/cell'
     assert_equal "M", @cell_1.render
   end
 
-  def test_board_results_when_cell_has_not_been_fired_upon_and_contains_a_ship
+  def test_board_result_when_cell_has_not_been_fired_upon_and_contains_a_ship
     @cell_2.place_ship(@cruiser)
 
     assert_equal "S", @cell_2.render(true)
