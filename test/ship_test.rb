@@ -3,58 +3,61 @@ require 'minitest/pride'
 require './lib/ship' 
 
 class ShipTest < Minitest::Test
+  def setup
+    @cruiser = Ship.new("Cruiser", 3)
+  end 
+
+
   def test_ship_exists
-    cruiser = Ship.new("Cruiser", 3)
-    assert_instance_of Ship, cruiser
+    assert_instance_of Ship, @cruiser
   end
 
   def test_it_has_attributes
-    cruiser = Ship.new("Cruiser", 3)
-    assert_equal "Cruiser", cruiser.name
-    assert_equal 3, cruiser.length
-    assert_equal 3, cruiser.health
+    assert_equal "Cruiser", @cruiser.name
+    assert_equal 3, @cruiser.length
+    assert_equal 3, @cruiser.health
   end
 
-  #test if hit works
+  def test_if_hit_works_by_checking_ships_health
+    @cruiser.hit
 
-  def test_if_ship_sunk
-    cruiser = Ship.new("Cruiser", 3)
-    refute cruiser.sunk?
+    assert_equal 2, @cruiser.health
+  end 
 
-    cruiser = Ship.new("Cruiser", 3)
+  def test_if_ship_sinks_after_hit
+    refute @cruiser.sunk?
 
-    cruiser.hit
+    2.times do #Martha refactor 
+      @cruiser.hit
+    end 
 
-    cruiser = Ship.new("Cruiser", 3)
-    3.times do
-      cruiser.hit
+    refute @cruiser.sunk?
+
+    3.times do  #Martha to refactor this using {}
+      @cruiser.hit
     end
-    assert cruiser.sunk?
 
-    cruiser = Ship.new("Cruiser", 3) #can delete if in same method 
-    7.times do
-      cruiser.hit
+    assert @cruiser.sunk?
+
+    7.times do #Martha to refactor 
+      @cruiser.hit
     end
     
-    assert cruiser.sunk?
-
+    assert @cruiser.sunk?
   end
 
-  def test_the_ships_health_after_hit 
-    cruiser = Ship.new("Cruiser", 3)
-    cruiser.hit
-    assert_equal 2, cruiser.health
+  def test_ships_health_after_hit 
+    @cruiser.hit
 
-    cruiser = Ship.new("Cruiser", 3)
-    cruiser.hit 
-    cruiser.hit
-    assert_equal 1, cruiser.health
+    assert_equal 2, @cruiser.health
 
-    cruiser = Ship.new("Cruiser", 3)
-    cruiser.hit 
-    cruiser.hit
-    cruiser.hit
-    cruiser.hit 
-    assert_equal -1, cruiser.health
+    @cruiser.hit #Martha to refactor 
+    @cruiser.hit
+
+    assert_equal 0, @cruiser.health
+
+    @cruiser.hit 
+
+    assert_equal -1, @cruiser.health
   end
 end
