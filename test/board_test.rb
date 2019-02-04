@@ -21,16 +21,19 @@ class BoardTest < Minitest::Test
   def test_it_can_create_16_cells_with_key_value_pair
     @board.create_cells
 
+    board = Board.new
+
+    assert_equal Hash, board.cells.class
+    #assert_equal 16, board.cells.keys.length -- cannot test till as actual = 0
+  end
+
+  def test_it_has_16_cells_with_key_value_pair
+    board = Board.new
+
     assert_equal 16, @board.cells.length
     assert_equal 16, @board.cells.keys.length
     assert_equal 16, @board.cells.values.length
   end 
- 
-  # BELOW - do I test for this? how? 
-  # def test_key_value_points_to_cell_objects
-  #   expected = <Cell:0xXXXXXX @coordinate="A1", @ship=nil, @fire_upon=false>
-  #   assert_equal expected, @board.create_cells["A1"]
-  # end 
 
   def test_it_can_validate_coordinates
     assert @board.valid_coordinate?("A1") 
@@ -38,7 +41,8 @@ class BoardTest < Minitest::Test
     refute @board.valid_coordinate?("A5")
     refute @board.valid_coordinate?("E1")
     refute @board.valid_coordinate?("F2")
-  end
+
+  # def test_key_value_points_to_cell_objects #do i test for this? how? 
 
   def test_it_can_validate_if_coordinates_are_same_length
     refute @board.same_length?(@submarine, ["A2", "A3", "A4"])
@@ -103,20 +107,17 @@ class BoardTest < Minitest::Test
     assert @board.not_diagonal?(@submarine, ["D1", "D2"])
   end 
 
-  def test_it_
-  end 
-
   def test_it_can_validate_placement 
     assert @board.valid_placement?(@submarine, ["A1", "A2"])
     assert @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
     refute @board.valid_placement?(@cruiser, ["A1", "C3"])
     refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
-  end
+  end 
 
   def test_if_ships_can_be_placed_on_cells_and_cells_contain_same_ship
     @board.create_cells 
     @board.place(@cruiser, ["A1", "A2", "A3"]) 
-
+    
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
     cell_3 = @board.cells["A3"]  
@@ -141,7 +142,6 @@ class BoardTest < Minitest::Test
     refute @board.valid_placement?(@submarine, ["A1", "B1"])
   end 
 
-
   def test_it_can_return_array_of_row_coordinates
     expected = 
     [["A1", "A2", "A3", "A4"], 
@@ -161,6 +161,5 @@ class BoardTest < Minitest::Test
     
     assert_equal expected, @board.columns
   end 
-
 end 
   

@@ -47,6 +47,12 @@ require './lib/cell'
     @cell.place_ship(@cruiser) 
     @cell.fire_upon
 
+    cell = Cell.new("B4") 
+    cruiser = Ship.new("Cruiser", 3)
+   
+    cell.place_ship(cruiser) 
+    cell.fire_upon
+
     assert_equal 2, @cell.ship.health 
   end
 
@@ -60,8 +66,11 @@ require './lib/cell'
     assert_equal "M", @cell_1.render
   end
 
-  def test_board_result_when_cell_has_not_been_fired_upon_and_contains_a_ship
-    @cell_2.place_ship(@cruiser)
+  def test_board_results_when_cell_has_not_been_fired_upon_and_contains_a_ship
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+
+    cell_2.place_ship(cruiser)
 
     assert_equal "S", @cell_2.render(true)
   end 
@@ -69,6 +78,12 @@ require './lib/cell'
   def test_board_result_when_cell_has_been_fired_upon_and_contains_ship
     @cell_2.place_ship(@cruiser)
     @cell_2.fire_upon
+
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+   
+    cell_2.place_ship(cruiser)
+    cell_2.fire_upon
 
     assert_equal "H", @cell_2.render
   end
@@ -87,3 +102,4 @@ require './lib/cell'
     assert_equal "X", @cell_2.render
   end     
  end
+
