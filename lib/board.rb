@@ -1,12 +1,13 @@
 require './lib/cell'
 
 class Board
-    attr_reader :cells, :x_coordinate, :y_coordinate
+    attr_reader :cells, :x_coordinate, :y_coordinate, :cells_taken 
 
     def initialize
         @x_coordinate = (1..4)
         @y_coordinate = ("A".."D")
         @cells = {}
+        @cells_taken = []
     end
 
     def create_cells
@@ -109,15 +110,45 @@ class Board
         consecutive?(ship, coordinates) && same_letter?(ship, coordinates) || same_number?(ship, coordinates)
     end
 
+    def overlap?(ship, coordinates)
+        coordinates.any? do |coordinate|
+            @cells_taken.include?(coordinate)
+        end 
+    end 
+
     def valid_placement?(ship, coordinates)
         consecutive?(ship, coordinates) &&
         not_diagonal?(ship, coordinates) &&
-        same_length?(ship, coordinates) 
+        same_length?(ship, coordinates) &&
+        overlap?(ship, coordinates)
     end
 
+    def place(ship, coordinates)
+        coordinates.each do |coordinate|
+            @cells[coordinate].place_ship(ship)
+            @cells_taken << coordinate 
+        end
+    end 
+
+    def rows
+        letters = @y_coordinate.to_a
+        numbers = Array.new(4, @x_coordinate.to_a)
+        numbers.map.with_index do |numbers_array, index|
+            numbers_array.map do |number|
+              "#{letters[index]}#{number}"
+            end
+        end 
+    end 
+
+    def columns 
+        rows.transpose
+    end 
 end 
+
 board = Board.new
 
 board.create_cells
 
-p board.same_letter?(@cruiser, ["A2", "B3", "C4"])
+p board.rows
+p board.columns
+
