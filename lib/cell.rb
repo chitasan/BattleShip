@@ -28,18 +28,13 @@ class Cell
     end
   end
 
-  def render(boolean = false) #refactor, case statement? #choose conditional statement or boolean, below not both! 
-    if @ship != nil && @fire_upon == true && @ship.sunk? == false
-      "H"
-    elsif @ship == nil && @fire_upon == true
-      "M"
-    elsif @fire_upon == true && @ship.sunk? == true && @ship != nil
-      "X"
-    elsif @ship != nil && boolean == true && @fire_upon == false 
-      "S"
-    else 
-      "."
+  def render(boolean = false)
+    case 
+    when @ship != nil && @fire_upon == true && @ship.sunk? == false then "H"
+    when @ship == nil && @fire_upon == true then "M"
+    when @fire_upon == true && @ship.sunk? == true && @ship != nil then "X"
+    when @ship != nil && boolean == true && @fire_upon == false then "S"
+    else "."
     end 
   end
-
 end

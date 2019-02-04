@@ -1,63 +1,154 @@
 require './lib/cell'
 
 class Board
-    attr_reader :cells, :columns, :rows
+    attr_reader :cells, :x_coordinate, :y_coordinate, :cells_taken 
 
     def initialize
-        @columns = ("A".."D")
-        @rows = (1..4)
-
+        @x_coordinate = (1..4)
+        @y_coordinate = ("A".."D")
         @cells = {}
-    end 
-
-    def create_cells
-        @columns.each do |column|
-            @rows.each do |row|
-                key = "#{column}#{row}"
-                cells[key] = Cell.new(key)
-             end
-        end
-        @cells
+        @cells_taken = []
     end
 
-    def valid_coordinate?(coordinate) 
+    def create_cells
+        y_coordinate.each do |letter|
+            x_coordinate.each do |number|
+                coordinate = "#{letter}#{number}"
+                cells[coordinate] = Cell.new(coordinate)
+             end
+        end
+        cells
+    end
+
+    def valid_coordinate?(coordinate)
         create_cells.key?(coordinate)
     end
 
-    def coordinate_column_to_oordinates(coordinates)
+    def same_length?(ship, coordinates)
+        ship.length == coordinates.length
+    end 
+
+    def split_coordinates(ship, coordinates)
+        split_coordinates = []
+        coordinates.map do |coordinate|
+            split_coordinates << coordinate.split('').to_a
+        end 
+        split_coordinates.flatten
+    end 
+
+    def y_coordinates_ordinal_values(ship, coordinates)
+        split_coords = split_coordinates(ship, coordinates)
+
+        letters = split_coords.reject do |coordinate| 
+            ["1", "2", "3", "4"].include?(coordinate)
+        end 
+
+        ordinal_value = letters.map do |letter|
+            letter.to_s.ord
+        end 
+    end
+
+    def x_coordinates_numbers(ship, coordinates)
+        split_coords = split_coordinates(ship, coordinates)
+
+        numbers = split_coords.reject do |coordinate| 
+            ["A", "B", "C", "D"].include?(coordinate)
+        end 
+
+        numbers.map do |number|
+            number.to_i
+        end 
+    end 
+
+    def letters_consecutive?(ship, coordinates)
+        ordinals = y_coordinates_ordinal_values(ship, coordinates)
+        ordinals.each_cons(2).all? do |x,y|
+            y == x + 1
+        end
+    end 
+
+    def numbers_consecutive?(ship, coordinates)
+        numbers = x_coordinates_numbers(ship, coordinates)
+        numbers.each_cons(2).all? do |x,y|
+            y == x + 1
+        end
+    end
+
+    def same_letter?(ship, coordinates)
+        y_coordinates = []
+
         split_coordinates = coordinates.map do |coordinate|
             coordinate.split('')
         end
 
-        new_coordinates_with_oordinates_ordinate = split_coordinates.map do |coordinate|
-            coordinate[0].to_s.ord
-        end 
+        split_coordinates.each do |coordinates|
+          y_coordinates << coordinates[0]
+        end
 
+         y_coordinates.uniq.size == 1
     end
-    
-    def split_coordinates(coordinates)
-        coordinates.map do |coordinate|
+
+    def same_number?(ship, coordinates)
+        x_coordinates = []
+
+        split_coordinates = coordinates.map do |coordinate|
             coordinate.split('')
         end
+
+        split_coordinates.each do |coordinate|
+            x_coordinates << coordinate[1].to_i
+        end
+        x_coordinates.uniq.size == 1
     end
 
-    def consecutive?(coordinates)
-        coordinates_into_string = coordinates.to_s.gsub!(/[^0-9A-Za-z]/, '')
-
-        coordinates_into_string.chars.map(&:to_i).each_cons(2).all? {|x,y| x == y - 1}
-        #use .ord?/ change columns into ordinates 
+    def consecutive?(ship, coordinates)
+        same_number?(ship, coordinates) && letters_consecutive?(ship,coordinates) ||
+        same_letter?(ship, coordinates) && numbers_consecutive?(ship,coordinates) 
     end 
 
-    def diagonal?
+    def not_diagonal?(ship, coordinates) 
+        consecutive?(ship, coordinates) && same_letter?(ship, coordinates) || same_number?(ship, coordinates)
     end
-    
-    def valid_placement?(ship, coordinates) 
-        #same length:
-        #ship.length == coordinates.length &&
-        #conseutive? == true 
-        #diagonal == false, rows || column must not match 
-            #slope = +/-1
+
+    def overlap?(ship, coordinates)
+        coordinates.any? do |coordinate|
+            @cells_taken.include?(coordinate)
+        end 
+    end 
+
+    def valid_placement?(ship, coordinates)
+        consecutive?(ship, coordinates) &&
+        not_diagonal?(ship, coordinates) &&
+        same_length?(ship, coordinates) &&
+        overlap?(ship, coordinates)
     end
+
+    def place(ship, coordinates)
+        coordinates.each do |coordinate|
+            @cells[coordinate].place_ship(ship)
+            @cells_taken << coordinate 
+        end
+    end 
+
+    def rows
+        letters = @y_coordinate.to_a
+        numbers = Array.new(4, @x_coordinate.to_a)
+        numbers.map.with_index do |numbers_array, index|
+            numbers_array.map do |number|
+              "#{letters[index]}#{number}"
+            end
+        end 
+    end 
+
+    def columns 
+        rows.transpose
+    end 
 end 
 
+board = Board.new
+
+board.create_cells
+
+p board.rows
+p board.columns
 
