@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/board'
-require './lib/ship'
 
 class BoardTest < Minitest::Test
   def setup
@@ -14,25 +13,25 @@ class BoardTest < Minitest::Test
     assert_instance_of Board, @board
   end
 
-  def test_that_cells_attribute_and_is_a_hash
+  def test_it_has_cells_attribute_and_attribute_class
     assert_equal Hash, @board.cells.class
   end
 
-  def test_it_can_create_16_cells_with_key_value_pair
-    @board.create_cells
-
-    board = Board.new
-
-    assert_equal Hash, board.cells.class
-    #assert_equal 16, board.cells.keys.length -- cannot test till as actual = 0
-  end
+  def test_it_has_cells_taken_attribute_and_that_it_is_empty_by_default
+    assert_equal [], @board.cells_taken
+  end 
 
   def test_it_has_16_cells_with_key_value_pair
-    board = Board.new
-
+    @board.create_cells
+    
     assert_equal 16, @board.cells.length
     assert_equal 16, @board.cells.keys.length
     assert_equal 16, @board.cells.values.length
+  end 
+ 
+  def test_key_value_points_to_cell_objects
+    @board.create_cells
+    assert_equal Cell, @board.cells["A1"].class
   end 
 
   def test_it_can_validate_coordinates
@@ -41,8 +40,7 @@ class BoardTest < Minitest::Test
     refute @board.valid_coordinate?("A5")
     refute @board.valid_coordinate?("E1")
     refute @board.valid_coordinate?("F2")
-
-  # def test_key_value_points_to_cell_objects #do i test for this? how? 
+  end 
 
   def test_it_can_validate_if_coordinates_are_same_length
     refute @board.same_length?(@submarine, ["A2", "A3", "A4"])
@@ -100,11 +98,11 @@ class BoardTest < Minitest::Test
     assert @board.consecutive?(@cruiser, ["B1", "B2" "B3"])
   end 
 
-  def test_it_can_validate_if_coordinates_are_not_diagonal
-    refute @board.not_diagonal?(@cruiser, ["A1", "B2", "C3"])
-    refute @board.not_diagonal?(@submarine, ["C2", "D3"])
-    assert @board.not_diagonal?(@cruiser, ["C1", "C2", "C3"])
-    assert @board.not_diagonal?(@submarine, ["D1", "D2"])
+  def test_it_can_validate_if_coordinates_are_diagonal
+    assert @board.diagonal?(@cruiser, ["A1", "B2", "C3"])
+    assert @board.diagonal?(@submarine, ["C2", "D3"])
+    refute @board.diagonal?(@cruiser, ["C1", "C2", "C3"])
+    refute @board.diagonal?(@submarine, ["D1", "D2"])
   end 
 
   def test_it_can_validate_placement 
@@ -129,6 +127,13 @@ class BoardTest < Minitest::Test
     assert @board.cells["A1"].ship == @board.cells["A2"].ship
   end
 
+  def test_it_can_validate_overlap
+    @board.create_cells 
+    @board.place(@cruiser, ["A1", "A2", "A4"]) 
+    assert @board.overlap?(@submarine, ["A2", "A3", "A4"])
+    refute @board.overlap?(@cruiser, ["B1", "B2"])
+  end
+
   def test_if_ships_overlap 
     @board.create_cells 
     @board.place(@cruiser, ["A1", "A2", "A3"]) 
@@ -143,23 +148,42 @@ class BoardTest < Minitest::Test
   end 
 
   def test_it_can_return_array_of_row_coordinates
-    expected = 
-    [["A1", "A2", "A3", "A4"], 
-    ["B1", "B2", "B3", "B4"], 
-    ["C1", "C2", "C3", "C4"], 
-    ["D1", "D2", "D3", "D4"]]
+    @board.create_cells
+    expected = [
+      ["A1", "A2", "A3", "A4"], 
+      ["B1", "B2", "B3", "B4"], 
+      ["C1", "C2", "C3", "C4"], 
+      ["D1", "D2", "D3", "D4"]
+    ]
 
-    assert_equal expected, @board.rows 
+    assert_equal expected, @board.rows_array
   end
   
   def test_it_can_return_array_of_column_coordinates
-    expected = 
-    [["A1", "B1", "C1", "D1"], 
-    ["A2", "B2", "C2", "D2"], 
-    ["A3", "B3", "C3", "D3"], 
-    ["A4", "B4", "C4", "D4"]]
+    expected = [
+      ["A1", "B1", "C1", "D1"], 
+      ["A2", "B2", "C2", "D2"], 
+      ["A3", "B3", "C3", "D3"], 
+      ["A4", "B4", "C4", "D4"]
+    ]
     
-    assert_equal expected, @board.columns
+    assert_equal expected, @board.columns_array
+  end 
+
+  def test_it_can_render_empty_board
+    @board.create_cells
+
+    expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    assert_equal expected, @board.render
+  end 
+
+  def test_it_can_render_players_board_with_placed_ships 
+    @board.create_cells
+    @board.place(@cruiser, ["A1", "A2", "A3"]) 
+
+    expected = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+
+    assert_equal expected, @board.render(true)
   end 
 end 
   

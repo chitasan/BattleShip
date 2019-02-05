@@ -10,7 +10,7 @@ class Cell
   end
 
   def empty?
-    @ship = nil
+    @ship == nil
   end
 
   def place_ship(ship)
@@ -28,12 +28,12 @@ class Cell
     end
   end
 
-  def render(boolean = false)
+  def render(player_board = false)
     case 
     when @ship != nil && @fire_upon == true && @ship.sunk? == false then "H"
     when @ship == nil && @fire_upon == true then "M"
     when @fire_upon == true && @ship.sunk? == true && @ship != nil then "X"
-    when @ship != nil && boolean == true && @fire_upon == false then "S"
+    when @ship != nil && player_board == true && @fire_upon == false then "S"
     else "."
     end 
   end
