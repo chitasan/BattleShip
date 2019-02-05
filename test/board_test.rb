@@ -17,13 +17,13 @@ class BoardTest < Minitest::Test
     assert_equal Hash, @board.cells.class
   end
 
-  def test_it_has_cells_taken_attrbute_and_that_it_is_empty_by_ddefault
+  def test_it_has_cells_taken_attribute_and_that_it_is_empty_by_default
     assert_equal [], @board.cells_taken
   end 
 
-  def test_it_can_create_16_cells_with_key_value_pair
+  def test_it_has_16_cells_with_key_value_pair
     @board.create_cells
-
+    
     assert_equal 16, @board.cells.length
     assert_equal 16, @board.cells.keys.length
     assert_equal 16, @board.cells.values.length
@@ -40,7 +40,7 @@ class BoardTest < Minitest::Test
     refute @board.valid_coordinate?("A5")
     refute @board.valid_coordinate?("E1")
     refute @board.valid_coordinate?("F2")
-  end
+  end 
 
   def test_it_can_validate_if_coordinates_are_same_length
     refute @board.same_length?(@submarine, ["A2", "A3", "A4"])
@@ -110,12 +110,12 @@ class BoardTest < Minitest::Test
     assert @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
     refute @board.valid_placement?(@cruiser, ["A1", "C3"])
     refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
-  end
+  end 
 
   def test_if_ships_can_be_placed_on_cells_and_cells_contain_same_ship
     @board.create_cells 
     @board.place(@cruiser, ["A1", "A2", "A3"]) 
-
+    
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
     cell_3 = @board.cells["A3"]  
@@ -146,7 +146,6 @@ class BoardTest < Minitest::Test
 
     refute @board.valid_placement?(@submarine, ["A1", "B1"])
   end 
-
 
   def test_it_can_return_array_of_row_coordinates
     @board.create_cells
