@@ -149,34 +149,42 @@ class BoardTest < Minitest::Test
 
 
   def test_it_can_return_array_of_row_coordinates
+    @board.create_cells
     expected = [
-    ["A1", "A2", "A3", "A4"], 
-    ["B1", "B2", "B3", "B4"], 
-    ["C1", "C2", "C3", "C4"], 
-    ["D1", "D2", "D3", "D4"]
+      ["A1", "A2", "A3", "A4"], 
+      ["B1", "B2", "B3", "B4"], 
+      ["C1", "C2", "C3", "C4"], 
+      ["D1", "D2", "D3", "D4"]
     ]
 
-    assert_equal expected, @board.rows 
+    assert_equal expected, @board.rows_array
   end
   
   def test_it_can_return_array_of_column_coordinates
     expected = [
-    ["A1", "B1", "C1", "D1"], 
-    ["A2", "B2", "C2", "D2"], 
-    ["A3", "B3", "C3", "D3"], 
-    ["A4", "B4", "C4", "D4"]
+      ["A1", "B1", "C1", "D1"], 
+      ["A2", "B2", "C2", "D2"], 
+      ["A3", "B3", "C3", "D3"], 
+      ["A4", "B4", "C4", "D4"]
     ]
     
-    assert_equal expected, @board.columns
+    assert_equal expected, @board.columns_array
   end 
 
-  def test_it_can_render_board
+  def test_it_can_render_empty_board
+    @board.create_cells
 
+    expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    assert_equal expected, @board.render
   end 
 
+  def test_it_can_render_players_board_with_placed_ships 
+    @board.create_cells
+    @board.place(@cruiser, ["A1", "A2", "A3"]) 
 
-  def test_it_can_render_players_board
+    expected = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
 
+    assert_equal expected, @board.render(true)
   end 
 end 
   

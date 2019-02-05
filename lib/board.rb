@@ -139,7 +139,7 @@ class Board
 		end
 	end 
 
-	def rows
+	def rows_array
 		letters = @y_coordinate.to_a
 		numbers = Array.new(4, @x_coordinate.to_a)
 		numbers.map.with_index do |numbers_array, index|
@@ -149,12 +149,23 @@ class Board
 		end 
 	end 
 
-	def columns 
-		rows.transpose
+	def columns_array
+		rows_array.transpose
 	end 
 
-	def render 
-		board = rows.map
-
+	def render(player_board = false)
+		board_display = rows_array.map.with_index do |row_array, index|
+			rows = row_array.map do |coordinate|
+				if @cells_taken.include?(coordinate) & player_board
+					@cells[coordinate].render(true)
+				else 
+					@cells[coordinate].render
+				end 
+			end 
+			letters_array = @y_coordinate.to_a[index]
+			rows.unshift(letters_array) << "\n"
+		end
+		"  1 2 3 4 \n#{board_display.join(" ")}"
 	end 
 end 
+
