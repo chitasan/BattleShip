@@ -1,14 +1,13 @@
 require './lib/board'
 require './lib/ship'
-require = 'pry'
 
 class Player
   attr_reader :board
 
   def initialize
     @board = Board.new
-    @submarine = Ship.new(2)
-    @cruiser = Ship.new(3)
+    @submarine = Ship.new("submarine", 2)
+    @cruiser = Ship.new("cruiser", 3)
   end
 
   def game_setup
@@ -29,7 +28,7 @@ class Player
       coordinates = gets.chomp.upcase.split
     end
 
-    @board.place_ship(@submarine, coordinates)
+    @board.place(@submarine, coordinates)
 
  end
 end
