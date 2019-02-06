@@ -26,21 +26,15 @@ class ShipTest < Minitest::Test
   def test_if_ship_sinks_after_hit
     refute @cruiser.sunk?
 
-    2.times do #Martha refactor 
-      @cruiser.hit
-    end 
+    2.times { @cruiser.hit }
 
     refute @cruiser.sunk?
 
-    3.times do  #Martha to refactor this using {}
-      @cruiser.hit
-    end
-
+    3.times { @cruiser.hit }
+  
     assert @cruiser.sunk?
 
-    7.times do #Martha to refactor 
-      @cruiser.hit
-    end
+    7.times { @cruiser.hit } 
     
     assert @cruiser.sunk?
   end
@@ -50,8 +44,7 @@ class ShipTest < Minitest::Test
 
     assert_equal 2, @cruiser.health
 
-    @cruiser.hit #Martha to refactor 
-    @cruiser.hit
+    2.times { @cruiser.hit }
 
     assert_equal 0, @cruiser.health
 
