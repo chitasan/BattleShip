@@ -5,8 +5,8 @@ class Cell
 
   def initialize(coordinate)
     @coordinate = coordinate
-    @ship = nil
-    @fire_upon = false 
+    @ship       = nil
+    @fire_upon  = false 
   end
 
   def empty?
@@ -30,10 +30,10 @@ class Cell
 
   def render(player_board = false)
     case 
-    when @ship != nil && @fire_upon == true && @ship.sunk? == false then "H"
-    when @ship == nil && @fire_upon == true then "M"
-    when @fire_upon == true && @ship.sunk? == true && @ship != nil then "X"
-    when @ship != nil && player_board == true && @fire_upon == false then "S"
+      when @ship != nil && @fire_upon == true && @ship.sunk? == false then "H"
+      when @ship == nil && @fire_upon == true then "M"
+      when @fire_upon == true && @ship.sunk? == true && @ship != nil then "X"
+      when @ship != nil && player_board == true && @fire_upon == false then "S"
     else "."
     end 
   end
