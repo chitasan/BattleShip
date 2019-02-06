@@ -1,5 +1,4 @@
 require './lib/cell'
-require 'pry'
 
 class Board
 	attr_reader :cells, :x_coordinate, :y_coordinate, :cells_taken 
@@ -7,8 +6,8 @@ class Board
 	def initialize
 		@x_coordinate = (1..4)
 		@y_coordinate = ("A".."D")
-		@cells = {}
-		@cells_taken = []
+		@cells 				= {}
+		@cells_taken  = []
 	end
 
 	def create_cells
@@ -31,74 +30,43 @@ class Board
 
 	def split_coordinates(ship, coordinates)
 		split_coordinates = []
-		coordinates.map do |coordinate|
-				split_coordinates << coordinate.split('').to_a
-		end 
+		coordinates.map { |coordinate| split_coordinates << coordinate.split('').to_a } 
 		split_coordinates.flatten
 	end 
 
 	def y_coordinates_ordinal_values(ship, coordinates)
 		split_coords = split_coordinates(ship, coordinates)
-
-		letters = split_coords.reject do |coordinate| 
-				["1", "2", "3", "4"].include?(coordinate)
-		end 
-
-		ordinal_value = letters.map do |letter|
-				letter.to_s.ord
-		end 
+		letters = split_coords.reject { |coordinate| ["1", "2", "3", "4"].include?(coordinate) }
+		ordinal_value = letters.map { |letter| letter.to_s.ord }
 	end
 
 	def x_coordinates_numbers(ship, coordinates)
 		split_coords = split_coordinates(ship, coordinates)
-
-		numbers = split_coords.reject do |coordinate| 
-				["A", "B", "C", "D"].include?(coordinate)
-		end 
-
-		numbers.map do |number|
-				number.to_i
-		end 
+		numbers = split_coords.reject { |coordinate| ["A", "B", "C", "D"].include?(coordinate) }
+		numbers.map { |number|	number.to_i }
 	end 
 
 	def letters_consecutive?(ship, coordinates)
 		ordinals = y_coordinates_ordinal_values(ship, coordinates)
-		ordinals.each_cons(2).all? do |ordinal_1, ordinal_2|
-				ordinal_2 == ordinal_1 + 1
-		end
+		ordinals.each_cons(2).all? { |ordinal_1, ordinal_2|	ordinal_2 == ordinal_1 + 1 } 
 	end 
 
 	def numbers_consecutive?(ship, coordinates)
 		numbers = x_coordinates_numbers(ship, coordinates)
-		numbers.each_cons(2).all? do |number_1, number_2|
-				number_2 == number_1 + 1
-		end
+		numbers.each_cons(2).all? { |number_1, number_2|	number_2 == number_1 + 1 }
 	end
 
 	def same_letter?(ship, coordinates)
 		y_coordinates = []
-
-		split_coordinates = coordinates.map do |coordinate|
-				coordinate.split('')
-		end
-
-		split_coordinates.each do |coordinates|
-			y_coordinates << coordinates[0]
-		end
-
-			y_coordinates.uniq.size == 1
-	end
+		split_coordinates = coordinates.map { |coordinate|	coordinate.split('') }
+		split_coordinates.each { |coordinates|	y_coordinates << coordinates[0] } 
+		y_coordinates.uniq.size == 1
+	end 
 
 	def same_number?(ship, coordinates)
 		x_coordinates = []
-
-		split_coordinates = coordinates.map do |coordinate|
-				coordinate.split('')
-		end
-
-		split_coordinates.each do |coordinate|
-				x_coordinates << coordinate[1].to_i
-		end
+		split_coordinates = coordinates.map { |coordinate|	coordinate.split('') } 
+		split_coordinates.each { |coordinate| x_coordinates << coordinate[1].to_i } 
 		x_coordinates.uniq.size == 1
 	end
 
@@ -108,7 +76,7 @@ class Board
 	end 
 
 	def diagonal?(ship, coordinates) 
-		if (consecutive?(ship, coordinates) && 
+		if (consecutive?(ship, coordinates) && 	
 			(same_letter?(ship, coordinates)) || 
 			same_number?(ship, coordinates))
 			return false 
@@ -117,9 +85,7 @@ class Board
 	end
 
 	def overlap?(ship, coordinates)
-		coordinates.any? do |coordinate|
-				@cells_taken.include?(coordinate)
-		end 
+		coordinates.any? { |coordinate|	@cells_taken.include?(coordinate) }
 	end 
 
 	def valid_placement?(ship, coordinates)
@@ -165,6 +131,6 @@ class Board
 			letters_array = @y_coordinate.to_a[index]
 			rows.unshift(letters_array) << "\n"
 		end
-		"  1 2 3 4 \n#{board_display.join(" ")}"
+		"  1 2 3 4\n#{board_display.join(" ")}"
 	end 
 end 
