@@ -1,12 +1,11 @@
-require './lib/player'
-require 'minitest/autorun'
-require 'minitest/pride'
+require './lib/board'
+require './lib/ship'
+require './lib/cell'
+require './lib/game'
 
-class PlayerTest < Minitest::Test
+board = Board.new
+game = Game.new
+# cell = Cell.new()
+# ship = Ship.new
 
-  def test_it_exists
-    player = Player.new
-    assert_instance_of Player, player
-  end
-
-end
+game.main_menu
