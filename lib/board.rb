@@ -1,7 +1,7 @@
 require './lib/cell'
 
 class Board
- 	attr_reader :cells, :x_coordinate, :y_coordinate, :cells_taken
+	attr_reader :cells, :x_coordinate, :y_coordinate, :cells_taken
 
 	def initialize
 		@x_coordinate = (1..4)
@@ -10,7 +10,7 @@ class Board
 		@cells_taken  = []
 	end
 
- def create_cells
+	def create_cells
 		y_coordinate.each do |letter|
 			x_coordinate.each do |number|
 				coordinate = "#{letter}#{number}"
@@ -18,15 +18,15 @@ class Board
 			end
 		end
 		cells
- end
+	end
 
- 	def valid_coordinate?(coordinate)
-   	create_cells.key?(coordinate)
- 	end
+	def valid_coordinate?(coordinate)
+		create_cells.key?(coordinate)
+	end
 
- 	def same_length?(ship, coordinates)
-  	ship.length == coordinates.length
- 	end
+	def same_length?(ship, coordinates)
+		ship.length == coordinates.length
+	end
 
 	def split_coordinates(ship, coordinates)
 		split_coordinates = []
@@ -47,8 +47,8 @@ class Board
 	end
 
 	def letters_consecutive?(ship, coordinates)
-	ordinals = y_coordinates_ordinal_values(ship, coordinates)
-	ordinals.each_cons(2).all? { |ordinal_1, ordinal_2|    ordinal_2 == ordinal_1 + 1 }
+		ordinals = y_coordinates_ordinal_values(ship, coordinates)
+		ordinals.each_cons(2).all? { |ordinal_1, ordinal_2|    ordinal_2 == ordinal_1 + 1 }
 	end
 
 	def numbers_consecutive?(ship, coordinates)
@@ -110,30 +110,27 @@ class Board
 		numbers = Array.new(4, @x_coordinate.to_a)
 		numbers.map.with_index do |numbers_array, index|
 			numbers_array.map do |number|
-					"#{letters[index]}#{number}"
+				"#{letters[index]}#{number}"
 			end
 		end
 	end
 
- 	def columns_array
+	def columns_array
 		rows_array.transpose
 	end
 
 	def render(player_board = false)
 		board_display = rows_array.map.with_index do |row_array, index|
-			rows = row_array.map do |coordinate|
-				if @cells_taken.include?(coordinate) & player_board
-						@cells[coordinate].render(true)
-				else
-						@cells[coordinate].render
-				end
+		rows = row_array.map do |coordinate|
+			if @cells_taken.include?(coordinate) & player_board
+				@cells[coordinate].render(true)
+			else
+				@cells[coordinate].render
 			end
-			letters_array = @y_coordinate.to_a[index]
-			rows.unshift(letters_array) << "\n"
+		end
+		letters_array = @y_coordinate.to_a[index]
+		rows.unshift(letters_array) << "\n"
 		end
 		"  1 2 3 4\n#{board_display.join(" ")}"
 	end
-
-
-  
 end
