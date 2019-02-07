@@ -29,12 +29,12 @@ class Game
     end
   end
 
-  # def game_setup
-  #   @computer.place
-  #   "My submarine(2) and cruiser(3) have been placed./n"
-  #   "Please place your submarine(2) and cruiser(3)/n"
-  #   p @player.board.render
-  # end
+  def game_setup
+    @computer.place
+    "My submarine(2) and cruiser(3) have been placed./n"
+    "Please place your submarine(2) and cruiser(3)/n"
+    p @player.board.render
+  end
 
   # def place_sub
   #   p "Enter (2) coordinates for submarine"

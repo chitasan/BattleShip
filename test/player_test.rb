@@ -8,5 +8,4 @@ class PlayerTest < Minitest::Test
     player = Player.new
     assert_instance_of Player, player
   end
-
 end
