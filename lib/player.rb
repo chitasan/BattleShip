@@ -22,13 +22,11 @@ class Player
     print "=> "
     coordinates = gets.chomp.upcase.split
     while !board.valid_placement?(@submarine, coordinates)
-      p "You have entered invalid coordinates./n"
-      p "please try again/n"
+      p "You have entered invalid coordinates."
+      p "Please try again"
       p "=> "
       coordinates = gets.chomp.upcase.split
     end
-
     @board.place(@submarine, coordinates)
-
  end
 end
